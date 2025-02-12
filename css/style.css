@@ -15,10 +15,14 @@ header h1 {
   font-weight: 900;
 }
 
-#container3D canvas {
-  width: 100vw !important;
-  height: 100vh !important;
-  position: absolute;
-  top: 0;
-  left: 0;
+#container3D {
+  width: 600px;  /* Set desired width */
+  height: 400px; /* Set desired height */
+  border: 1px solid black; /* Just for visualization */
+  overflow: hidden;
+
+   margin: auto;
+  width: 50%;
+  border: 3px double red;
+  
 }
