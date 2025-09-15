@@ -1,202 +1,668 @@
 <!DOCTYPE html>
-<html>
+<html lang="lt">
 <head>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/style.css" />
-<style>
-body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-.w3-row-padding img {margin-bottom: 12px}
-/* Set the width of the sidebar to 120px */
-.w3-sidebar {width: 120px;background: #222;}
-/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
-#main {margin-left: 120px}
-/* Remove margins from "page content" on small screens */
-@media only screen and (max-width: 600px) {#main {margin-left: 0}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #6c5ce7 100%);
+            min-height: 100vh;
+            padding: 10px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px;
+            animation: float 30s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: headerFloat 20s linear infinite;
+        }
+
+        .header::after {
+            content: '🐕 🦴 ❤️ 🏠 🐕 🦴 ❤️ 🏠';
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            opacity: 0.3;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes headerFloat {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes marquee {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .safe-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(255,255,255,0.3); }
+            to { box-shadow: 0 0 20px rgba(255,255,255,0.6); }
+        }
+
+        .safe-badge::before {
+            content: "✅";
+            margin-right: 8px;
+            font-size: 16px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .profile-section {
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-section::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0,184,148,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .dog-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #00b894;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.2),
+                0 0 0 3px rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dog-photo:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 3px rgba(255,255,255,1),
+                0 0 20px rgba(0,184,148,0.5);
+        }
+
+        .dog-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .dog-details {
+            font-size: 16px;
+            color: #636e72;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-cards {
+            padding: 0 20px 20px;
+        }
+
+        .info-card {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00b894;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,184,148,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateX(10px) translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(0,184,148,0.2);
+            border-left-width: 6px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-right: 12px;
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .card-content {
+            color: #636e72;
+            line-height: 1.6;
+            font-size: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-buttons {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+
+        .contact-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .btn-phone {
+            background: linear-gradient(135deg, #00b894, #00a085);
+        }
+
+        .btn-sms {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+        }
+
+        .btn-email {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+        }
+
+        .btn-icon {
+            font-size: 20px;
+            margin-right: 10px;
+            position: relative;
+            z-index: 1;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-2px); }
+            75% { transform: translateY(1px); }
+        }
+
+        .emergency-note {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 20px;
+            margin: 0 20px 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            animation: emergencyPulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-note::before {
+            content: '⚠️ ⚠️ ⚠️';
+            position: absolute;
+            top: -20px;
+            left: -100%;
+            font-size: 30px;
+            opacity: 0.3;
+            animation: emergencyFloat 4s linear infinite;
+        }
+
+        @keyframes emergencyPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(253,121,168,0.5);
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: 0 0 30px rgba(253,121,168,0.8);
+            }
+        }
+
+        @keyframes emergencyFloat {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #636e72;
+            font-size: 14px;
+            border-top: 1px solid #e9ecef;
+            margin-top: 20px;
+            background: linear-gradient(90deg, transparent, rgba(0,184,148,0.05), transparent);
+        }
+
+        /* Particle effect */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 6s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 5px;
+                border-radius: 20px;
+            }
+            
+            .dog-name {
+                font-size: 24px;
+            }
+            
+            .main-title {
+                font-size: 20px;
+            }
+
+            .info-card:hover {
+                transform: translateX(5px) translateY(-2px);
+            }
+        }
+
+        /* Loading animation */
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200px 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Hover states for better interactivity */
+        .info-card:nth-child(1) { animation-delay: 0.1s; }
+        .info-card:nth-child(2) { animation-delay: 0.2s; }
+        .info-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Enhanced focus states for accessibility */
+        .contact-btn:focus {
+            outline: 3px solid rgba(255,255,255,0.5);
+            outline-offset: 2px;
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
-<body class="w3-black">
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="safe-badge">AR RADAI AURĄ?</div>
+                <h1 class="main-title">Šis šuo turi šeimininką!</h1>
+                <p class="subtitle">Nuskaitėte QR kodą nuo antkaklio</p>
+            </div>
+        </div>
 
-<!-- Icon Bar (Sidebar - hidden on small screens) -->
-<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
-  <!-- Avatar image in top left corner -->
-  <img src="/w3images/avatar_smoke.jpg" style="width:100%">
-  <a href="#" class="w3-bar-item w3-button w3-padding-large w3-black">
-    <i class="fa fa-home w3-xxlarge"></i>
-    <p>HOME</p>
-  </a>
-  <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-user w3-xxlarge"></i>
-    <p>ABOUT</p>
-  </a>
-  <a href="#photos" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-eye w3-xxlarge"></i>
-    <p>3D MODEL</p>
-  </a>
-  <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>CONTACT</p>
-  </a>
-</nav>
+        <div class="profile-section">
+            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=300&h=300&fit=crop&crop=face" 
+                 alt="Šuns nuotrauka" class="dog-photo" id="dogPhoto">
+            <h2 class="dog-name" id="dogName">Aura</h2>
+            <div class="dog-details" id="dogDetails">
+                Draugiška ir žaisminga<br>
+                
+            </div>
+        </div>
 
-<!-- Navbar on small screens (Hidden on medium and large screens) -->
-<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-  <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-    <a href="#" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
-    <a href="#about" class="w3-bar-item w3-button" style="width:25% !important">ABOUT</a>
-    <a href="#photos" class="w3-bar-item w3-button" style="width:25% !important">3D MODEL</a>
-    <a href="#contact" class="w3-bar-item w3-button" style="width:25% !important">CONTACT</a>
-  </div>
-</div>
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="card-header">
+                    <span class="card-icon">🏠</span>
+                    Namų adresas
+                </div>
+                <div class="card-content" id="homeAddress">
+                    Kulviečio 15, Jonava<br>
+                    Lietuva
+                </div>
+            </div>
 
-<!-- Page Content -->
-<div class="w3-padding-large" id="main">
-  <!-- Header/Home -->
-  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
-    <h1 class="w3-jumbo"><span class="w3-hide-small">49</span>street.</h1>
-    <p>3d printed convenience for your home.</p>
-    <div id="container3D"></div>
-  </header>
+            <div class="info-card">
+                <div class="card-header">
+                    <span class="card-icon">👤</span>
+                    Šeimininkas
+                </div>
+                <div class="card-content" id="ownerName">
+                    Justas
+                </div>
+            </div>
 
-  <!-- About Section -->
-  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-    <h2 class="w3-text-light-grey">My Name</h2>
-    <hr style="width:200px" class="w3-opacity">
-    <p>Some text about me. Some text about me. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-      ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur
-      adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-<br>
-    
-    <div class="w3-row w3-center w3-padding-16 w3-section w3-light-grey">
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">11+</span><br>
-        Partners
-      </div>
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">55+</span><br>
-        Projects Done
-      </div>
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">89+</span><br>
-        Happy Clients
-      </div>
-      <div class="w3-quarter w3-section">
-        <span class="w3-xlarge">150+</span><br>
-        Meetings
-      </div>
+            <div class="info-card">
+                <div class="card-header">
+                    <span class="card-icon">💉</span>
+                    Sveikata
+                </div>
+                <div class="card-content" id="healthInfo">
+                    • Paskiepyta<br>
+                    • Čipuota<br>
+                    • Nėra alergijų<br>
+                 
+                </div>
+            </div>
+        </div>
+
+        <div class="emergency-note">
+           Labai prašome, jei radote šį šunį vieną, susisiekite!
+        </div>
+
+        <div class="contact-buttons">
+            <a href="tel:+37060000000" class="contact-btn btn-phone" id="phoneBtn">
+                <span class="btn-icon">📞</span>
+                Skambinti: +370 600 00000
+            </a>
+            
+            <a href="sms:+37060000000?body=Radau jūsų šunį! Mano vieta:" class="contact-btn btn-sms" id="smsBtn">
+                <span class="btn-icon">💬</span>
+                Siųsti žinutę
+            </a>
+            
+            <a href="mailto:example@email.com?subject=Radau jūsų šunį&body=Sveiki! Radau jūsų šunį. Prašome susisiekti." 
+               class="contact-btn btn-email" id="emailBtn">
+                <span class="btn-icon">✉️</span>
+                Siųsti el. laišką
+            </a>
+        </div>
     </div>
 
-    <button class="w3-button w3-light-grey w3-padding-large w3-section">
-     mygtukas
-    </button>
-    
-    <!-- Grid for pricing tables -->
-    <h3 class="w3-padding-16 w3-text-light-grey">My Price</h3>
-    <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-half w3-margin-bottom">
-        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-          <li class="w3-dark-grey w3-xlarge w3-padding-32">Preke1</li>
-          <li class="w3-padding-16">parametras1</li>
-          <li class="w3-padding-16">parametras2</li>
-          <li class="w3-padding-16">parametras3</li>
-          <li class="w3-padding-16">parametras4</li>
-          <li class="w3-padding-16">
-            <h2>$ 10</h2>
-            <span class="w3-opacity">per month</span>
-          </li>
-          <li class="w3-light-grey w3-padding-24">
-            <button class="w3-button w3-white w3-padding-large w3-hover-black">pirkti</button>
-          </li>
-        </ul>
-      </div>
+    <script>
+        // Enhanced animations and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating particles
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.width = particle.style.height = Math.random() * 4 + 2 + 'px';
+                particle.style.backgroundColor = `rgba(${Math.random() * 255}, ${Math.random() * 255}, 255, 0.7)`;
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                document.body.appendChild(particle);
 
-      <div class="w3-half">
-        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-          <li class="w3-dark-grey w3-xlarge w3-padding-32">Preke2</li>
-          <li class="w3-padding-16">parametras1</li>
-          <li class="w3-padding-16">parametras2</li>
-          <li class="w3-padding-16">parametras3</li>
-          <li class="w3-padding-16">parametras4</li>
-          <li class="w3-padding-16">
-            <h2>$ 25</h2>
-            <span class="w3-opacity">per month</span>
-          </li>
-          <li class="w3-light-grey w3-padding-24">
-            <button class="w3-button w3-white w3-padding-large w3-hover-black">pirkti</button>
-          </li>
-        </ul>
-      </div>
-    <!-- End Grid/Pricing tables -->
-    </div>
-    
-    <!-- Testimonials -->
-    <h3 class="w3-padding-24 w3-text-light-grey">My Reputation</h3>  
-    <img src="/w3images/bandmember.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:80px">
-    <p><span class="w3-large w3-margin-right">bazas</span> CEO</p>
-    <p>saved us from a web disaster.</p><br>
-    
-    <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:80px">
-    <p><span class="w3-large w3-margin-right">bazas</span> CEO.</p>
-    <p>No one is better</p>
-  <!-- End About Section -->
-  </div>
-  
-  <!-- Portfolio Section -->
-  <div class="w3-padding-64 w3-content" id="photos">
-    <h2 class="w3-text-light-grey">3d Model</h2>
-    <hr style="width:200px" class="w3-opacity">
+                setTimeout(() => {
+                    particle.remove();
+                }, 6000);
+            }
 
-    <!-- Grid for photos -->
-    <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-half">
-        <img src="/w3images/wedding.jpg" style="width:100%">
-        <img src="/w3images/rocks.jpg" style="width:100%">
-        <img src="/w3images/sailboat.jpg" style="width:100%">
-      </div>
+           
 
-      <div class="w3-half">
-        <img src="/w3images/underwater.jpg" style="width:100%">
-        <img src="/w3images/chef.jpg" style="width:100%">
-        <img src="/w3images/wedding.jpg" style="width:100%">
-        <img src="/w3images/p6.jpg" style="width:100%">
-      </div>
-    <!-- End photo grid -->
-    </div>
-  <!-- End Portfolio Section -->
-  </div>
+            // Dog photo special interaction
+            const dogPhoto = document.getElementById('dogPhoto');
+            dogPhoto.addEventListener('click', function() {
+                this.style.animation = 'bounce 0.6s ease-in-out';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 600);
+            });
 
-  <!-- Contact Section -->
-  <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
-    <h2 class="w3-text-light-grey">Contact Me</h2>
-    <hr style="width:200px" class="w3-opacity">
-
-    <div class="w3-section">
-      <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> New York, US</p>
-      <p><i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Phone: +420</p>
-      <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: bazas@mail.com</p>
-    </div><br>
-   
-  </div>
-  
-    <!-- Footer -->
-  <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
-    <p class="w3-medium">Powered by <a href="https://629fm.com" target="_blank" class="w3-hover-text-green">it's over software</a></p>
-  <!-- End footer -->
-  </footer>
+            // Add dynamic gradient to emergency note
+            const emergencyNote = document.querySelector('.emergency-note');
+            let hue = 0;
+            setInterval(() => {
+                hue = (hue + 1) % 360;
+                emergencyNote.style.background = `linear-gradient(135deg, hsl(${hue + 320}, 80%, 70%), hsl(${hue + 340}, 70%, 60%))`;
+            }, 100);
+        });
 
 
-</div>
-<script type="module" src="js/main.js"></script>
+document.addEventListener("DOMContentLoaded", () => {
+    let hue = 220; // Start around a dark blue tone
+
+    function animateBackground() {
+        hue = (hue + 0.05) % 360;
+
+        const color1 = `hsl(${hue}, 40%, 15%)`; // Very dark tone
+        const color2 = `hsl(${(hue + 30) % 360}, 40%, 20%)`; // Slightly lighter
+        const color3 = `hsl(${(hue + 60) % 360}, 40%, 25%)`; // Smooth gradient
+
+        document.body.style.background = `linear-gradient(135deg, ${color1}, ${color2}, ${color3})`;
+
+        requestAnimationFrame(animateBackground);
+    }
+
+    animateBackground();
+});
+
+
+        // Add CSS for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
